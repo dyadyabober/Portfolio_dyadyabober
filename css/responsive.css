@@ -1,0 +1,186 @@
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+/* Tablet Styles */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 60px;
+        padding: 20px 15px;
+    }
+    
+    .logo {
+        font-size: 24px;
+        margin-bottom: 40px;
+    }
+    
+    .nav a {
+        font-size: 0;
+        width: 8px;
+        height: 8px;
+        background: #666666;
+        border-radius: 50%;
+        transition: background-color 0.3s ease;
+    }
+    
+    .nav a.active,
+    .nav a:hover {
+        background: #ffffff;
+    }
+
+    .main-content {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+    }
+
+    .section {
+        padding: 80px 20px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .scroll-to-top {
+        width: 45px;
+        height: 45px;
+        bottom: 20px;
+        right: 30px;
+        font-size: 18px;
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 480px) {
+    .section {
+        padding: 60px 15px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+    }
+
+    .value-card {
+        padding: 24px 18px;
+    }
+
+    .value-card h3 {
+        font-size: 18px;
+    }
+
+    .value-card p {
+        font-size: 13px;
+    }
+
+    .skill-group {
+        padding: 20px;
+    }
+
+    .skill-group h3 {
+        font-size: 18px;
+    }
+
+    .skill-list li {
+        font-size: 14px;
+    }
+
+    .job {
+        padding: 20px;
+    }
+
+    .job-title {
+        font-size: 18px;
+    }
+
+    .company {
+        font-size: 14px;
+    }
+
+    .job-desc {
+        font-size: 14px;
+    }
+
+    .contact-info {
+        padding: 30px 20px;
+    }
+
+    .contact-info h3 {
+        font-size: 20px;
+    }
+
+    .contact-info p {
+        font-size: 14px;
+    }
+
+    .scroll-to-top {
+        width: 40px;
+        height: 40px;
+        bottom: 15px;
+        right: 20px;
+        font-size: 16px;
+    }
+}
+
+/* Large Desktop Styles */
+@media (min-width: 1400px) {
+    .section-content {
+        max-width: 900px;
+    }
+    
+    .section-title {
+        font-size: 4rem;
+    }
+    
+    .values-grid {
+        gap: 32px;
+    }
+    
+    .value-card {
+        padding: 40px 32px;
+    }
+    
+    .skills-grid {
+        gap: 48px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .sidebar {
+        display: none;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .scroll-to-top {
+        display: none;
+    }
+    
+    .section {
+        min-height: auto;
+        page-break-inside: avoid;
+        padding: 40px 20px;
+    }
+}

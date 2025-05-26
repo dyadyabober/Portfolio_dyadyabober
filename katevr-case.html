@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KateVR — Case Study | Лев Frontend Developer</title>
+    <meta name="description" content="Детальний розбір проекту KateVR - складного SPA сайту з ідеальною адаптивністю та інтерактивністю.">
+    
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Header */
+        .case-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .case-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 60px;
+            left: 60px;
+            color: #60a5fa;
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+            z-index: 3;
+        }
+
+        .back-link:hover {
+            color: #ffffff;
+        }
+
+        .project-title {
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+        }
+
+        .project-subtitle {
+            font-size: 1.5rem;
+            color: #cccccc;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .link-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            background: rgba(96, 165, 250, 0.1);
+            border: 2px solid #60a5fa;
+            border-radius: 50px;
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .link-button:hover {
+            background: #60a5fa;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3);
+        }
+
+        /* Main Content */
+        .case-content {
+            padding: 100px 0;
+            background: #0a0a0a;
+        }
+
+        .section {
+            margin-bottom: 120px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: #ffffff;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 60px;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            border-radius: 2px;
+        }
+
+        .section-text {
+            font-size: 1.2rem;
+            color: #cccccc;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            max-width: 900px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 80px 0;
+        }
+
+        .stat-card {
+            background: rgba(17, 17, 17, 0.8);
+            padding: 40px 30px;
+            border-radius: 16px;
+            border: 1px solid #2a2a2a;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(96, 165, 250, 0.4);
+            box-shadow: 0 20px 40px rgba(96, 165, 250, 0.1);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #60a5fa;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #cccccc;
+            font-weight: 500;
+        }
+
+        /* Tech Stack */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 60px 0;
+        }
+
+        .tech-item {
+            background: rgba(17, 17, 17, 0.8);
+            padding: 30px 20px;
+            border-radius: 16px;
+            border: 1px solid #2a2a2a;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .tech-item:hover {
+            background: rgba(96, 165, 250, 0.05);
+            border-color: rgba(96, 165, 250, 0.3);
+            transform: translateY(-6px);
+        }
+
+        .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .tech-name {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .tech-description {
+            font-size: 0.95rem;
+            color: #888888;
+        }
+
+        /* Challenges Grid */
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .challenge-card {
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 16px;
+            padding: 35px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(96, 165, 250, 0.15);
+        }
+
+        .challenge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #60a5fa, #3b82f6, #2563eb);
+        }
+
+        .challenge-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .challenge-icon {
+            font-size: 1.8rem;
+        }
+
+        .challenge-description {
+            color: #cccccc;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 60px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #60a5fa, #3b82f6);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: rgba(17, 17, 17, 0.8);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid #2a2a2a;
+            margin: 0 50px;
+            transition: all 0.4s ease;
+            max-width: 450px;
+        }
+
+        .timeline-content:hover {
+            border-color: rgba(96, 165, 250, 0.3);
+            background: rgba(17, 17, 17, 0.9);
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background: #60a5fa;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            border: 4px solid #0a0a0a;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .timeline-duration {
+            color: #60a5fa;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .timeline-description {
+            color: #cccccc;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* Results Section */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .result-card {
+            background: rgba(17, 17, 17, 0.8);
+            padding: 35px;
+            border-radius: 16px;
+            border: 1px solid #2a2a2a;
+            transition: all 0.4s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(96, 165, 250, 0.4);
+            box-shadow: 0 20px 40px rgba(96, 165, 250, 0.1);
+        }
+
+        .result-icon {
+            font-size: 3.5rem;
+            color: #60a5fa;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .result-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            color: #cccccc;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* Code Examples */
+        .code-example {
+            background: #1a1a1a;
+            border: 1px solid #333333;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 40px 0;
+            transition: all 0.3s ease;
+        }
+
+        .code-example:hover {
+            border-color: rgba(96, 165, 250, 0.3);
+            box-shadow: 0 8px 25px rgba(96, 165, 250, 0.1);
+        }
+
+        .code-header {
+            background: #2a2a2a;
+            padding: 15px 25px;
+            font-size: 0.95rem;
+            color: #cccccc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .code-content {
+            padding: 30px;
+            overflow-x: auto;
+        }
+
+        .code-content pre {
+            color: #e5e5e5;
+            font-family: 'Monaco', 'SF Mono', 'Cascadia Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Copy Button */
+        .copy-button {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            background: rgba(96, 165, 250, 0.2);
+            border: 1px solid #60a5fa;
+            color: #60a5fa;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .copy-button:hover {
+            background: rgba(96, 165, 250, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .copy-button.copied {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: #22c55e;
+            color: #22c55e;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #60a5fa, #3b82f6);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        /* Particles Animation */
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(96, 165, 250, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 6s infinite linear;
+        }
+
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== УЛУЧШЕННАЯ АДАПТИВНОСТЬ ========== */
+
+        /* Large Desktop (1400px+) */
+        @media (min-width: 1400px) {
+            .container {
+                padding: 0 40px;
+            }
+            
+            .project-title {
+                font-size: 5.5rem;
+            }
+            
+            .project-subtitle {
+                font-size: 1.7rem;
+            }
+            
+            .section-title {
+                font-size: 3rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 40px;
+            }
+            
+            .tech-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+        /* Tablet Portrait (768px - 1023px) */
+        @media (max-width: 1023px) and (min-width: 768px) {
+            .container {
+                padding: 0 24px;
+            }
+            
+            .case-header {
+                padding: 80px 0;
+                min-height: 85vh;
+            }
+            
+            .back-link {
+                top: 40px;
+                left: 40px;
+                font-size: 15px;
+            }
+            
+            .project-title {
+                font-size: 3.5rem;
+                margin-bottom: 32px;
+            }
+            
+            .project-subtitle {
+                font-size: 1.3rem;
+                margin-bottom: 40px;
+            }
+            
+            .section {
+                margin-bottom: 80px;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+                padding-left: 25px;
+                margin-bottom: 32px;
+            }
+            
+            .section-title::before {
+                height: 50px;
+            }
+            
+            .section-text {
+                font-size: 1.1rem;
+                margin-bottom: 32px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+                margin: 60px 0;
+            }
+            
+            .stat-card {
+                padding: 32px 24px;
+            }
+            
+            .stat-number {
+                font-size: 3rem;
+            }
+            
+            .tech-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+            
+            .tech-item {
+                padding: 24px 16px;
+            }
+            
+            .tech-icon {
+                font-size: 2.5rem;
+                margin-bottom: 16px;
+            }
+            
+            .challenges-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+            
+            .challenge-card {
+                padding: 28px;
+            }
+            
+            .challenge-title {
+                font-size: 1.2rem;
+                margin-bottom: 16px;
+            }
+            
+            .challenge-icon {
+                font-size: 1.5rem;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+                align-items: flex-start;
+                padding-left: 40px;
+                margin-bottom: 40px;
+            }
+            
+            .timeline-item:nth-child(odd) {
+                flex-direction: column;
+            }
+            
+            .timeline-content {
+                margin: 0;
+                max-width: 100%;
+                padding: 16px;
+            }
+            
+            .timeline-dot {
+                left: 15px;
+                width: 12px;
+                height: 12px;
+                border: 2px solid #0a0a0a;
+            }
+            
+            .timeline-title {
+                font-size: 1rem;
+                margin-bottom: 6px;
+            }
+            
+            .timeline-duration {
+                font-size: 0.8rem;
+                margin-bottom: 10px;
+            }
+            
+            .timeline-description {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .result-card {
+                padding: 20px;
+            }
+            
+            .result-icon {
+                font-size: 2.5rem;
+                margin-bottom: 16px;
+            }
+            
+            .result-title {
+                font-size: 1.1rem;
+                margin-bottom: 14px;
+            }
+            
+            .result-description {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+            
+            .code-example {
+                margin: 20px 0;
+            }
+            
+            .code-header {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .code-content {
+                padding: 16px;
+            }
+            
+            .code-content pre {
+                font-size: 0.75rem;
+                line-height: 1.4;
+            }
+            
+            .copy-button {
+                padding: 4px 8px;
+                font-size: 10px;
+                top: 6px;
+                right: 8px;
+            }
+        }
+
+        /* Mobile (414px and below) */
+        @media (max-width: 414px) {
+          .timeline-dot {
+            display: none !important;
+          }
+
+          .timeline::before {
+            display: none !important;
+          }
+          
+          .timeline-item {
+            padding-left: 0px !important;
+          }
+        }
+        /* Extra Small Mobile (320px and below) */
+        @media (max-width: 320px) {
+            .container {
+                padding: 0 12px;
+            }
+            
+            .project-title {
+                font-size: 1.8rem;
+            }
+            
+            .project-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .link-button {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+        }
+
+        /* Landscape orientation optimizations */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .case-header {
+                min-height: 100vh;
+                padding: 40px 0;
+            }
+            
+            .project-title {
+                font-size: 2.5rem;
+                margin-bottom: 16px;
+            }
+            
+            .project-subtitle {
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+            
+            .section {
+                margin-bottom: 40px;
+            }
+        }
+
+        /* High DPI displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .case-header::before {
+                background-size: 50px 50px;
+            }
+            
+            .code-content pre {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .link-button:hover,
+            .stat-card:hover,
+            .tech-item:hover,
+            .challenge-card:hover,
+            .result-card:hover,
+            .timeline-content:hover,
+            .code-example:hover {
+                transform: none;
+            }
+            
+            .link-button:active {
+                transform: scale(0.98);
+            }
+            
+            .copy-button {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .case-header {
+                background: white !important;
+                color: black !important;
+                padding: 20px 0;
+                min-height: auto;
+            }
+            
+            .case-header::before,
+            .progress-bar,
+            .particle,
+            .copy-button {
+                display: none !important;
+            }
+            
+            .back-link {
+                display: none;
+            }
+            
+            .project-title {
+                color: black !important;
+                -webkit-text-fill-color: black !important;
+            }
+            
+            .case-content {
+                background: white !important;
+                color: black !important;
+            }
+            
+            .section-title,
+            .timeline-title,
+            .result-title,
+            .challenge-title,
+            .tech-name {
+                color: black !important;
+            }
+            
+            .stat-card,
+            .tech-item,
+            .challenge-card,
+            .result-card,
+            .timeline-content {
+                background: white !important;
+                border: 1px solid #ccc !important;
+                box-shadow: none !important;
+                break-inside: avoid;
+            }
+            
+            .code-example {
+                background: #f5f5f5 !important;
+                border: 1px solid #ccc !important;
+            }
+            
+            .code-header {
+                background: #e5e5e5 !important;
+                color: black !important;
+            }
+            
+            .code-content pre {
+                color: black !important;
+            }
+            
+            .link-button {
+                border: 1px solid black !important;
+                color: black !important;
+                background: white !important;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar"></div>
+
+    <!-- Header -->
+    <header class="case-header">
+        <a href="index.html" class="back-link">← Назад до портфоліо</a>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="project-title">KateVR</h1>
+                <p class="project-subtitle">
+                    Професійний SPA-сайт VR-технологій з ідеальною адаптивністю та складною інтерактивністю
+                </p>
+                <div class="project-links">
+                    <a href="https://dyadyabober.github.io/layout_KateVR/" target="_blank" class="link-button">
+                        🌐 Переглянути сайт
+                    </a>
+                    <a href="https://github.com/dyadyabober/layout_KateVR" target="_blank" class="link-button">
+                        📂 GitHub код
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="case-content">
+        <div class="container">
+            <!-- Overview -->
+            <section class="section fade-in">
+                <h2 class="section-title">Огляд проекту</h2>
+                <p class="section-text">
+                    KateVR — це комплексний лендінг для VR-технологій, який я створив повністю з нуля за дизайном з Figma в рамках навчання в Mate Academy. Проект класифікується як <strong>HARD рівень складності</strong> і демонструє глибокі навички frontend розробки.
+                </p>
+                <p class="section-text">
+                    Сайт представляє інноваційну VR-систему пересування KAT Loco з повною інформацією про продукт, технічні характеристики, багатокроковий процес покупки та мультимовну підтримку.
+                </p>
+
+                <!-- Project Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">70-100</div>
+                        <div class="stat-label">Годин розробки</div>
+                    </div>
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">40+</div>
+                        <div class="stat-label">SCSS компонентів</div>
+                    </div>
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">800+</div>
+                        <div class="stat-label">Рядків коду</div>
+                    </div>
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Брейкпоінти</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tech Stack -->
+            <section class="section fade-in">
+                <h2 class="section-title">Технології</h2>
+                <p class="section-text">
+                    Проект побудований з використанням сучасних технологій та найкращих практик frontend розробки.
+                </p>
+
+                <div class="tech-grid">
+                    <div class="tech-item fade-in">
+                        <div class="tech-icon">🏗️</div>
+                        <div class="tech-name">HTML5</div>
+                        <div class="tech-description">Семантична розмітка</div>
+                    </div>
+                    <div class="tech-item fade-in">
+                        <div class="tech-icon">🎨</div>
+                        <div class="tech-name">SCSS/Sass</div>
+                        <div class="tech-description">Препроцесор + BEM</div>
+                    </div>
+                    <div class="tech-item fade-in">
+                        <div class="tech-icon">⚡</div>
+                        <div class="tech-name">Vanilla JS</div>
+                        <div class="tech-description">ES6+ без фреймворків</div>
+                    </div>
+                    <div class="tech-item fade-in">
+                        <div class="tech-icon">📱</div>
+                        <div class="tech-name">CSS Grid</div>
+                        <div class="tech-description">Сучасна верстка</div>
+                    </div>
+                    <div class="tech-item fade-in">
+                        <div class="tech-icon">🔧</div>
+                        <div class="tech-name">Webpack</div>
+                        <div class="tech-description">Збірка та деплой</div>
+                    </div>
+                    <div class="tech-item fade-in">
+                        <div class="tech-icon">🌍</div>
+                        <div class="tech-name">i18n</div>
+                        <div class="tech-description">Мультимовність</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Challenges -->
+            <section class="section fade-in">
+                <h2 class="section-title">Технічні виклики</h2>
+                <p class="section-text">
+                    Проект вимагав вирішення складних технічних задач та імплементації просунутої функціональності.
+                </p>
+
+                <div class="challenges-grid">
+                    <div class="challenge-card fade-in">
+                        <h3 class="challenge-title">
+                            <span class="challenge-icon">🌐</span>
+                            Мультимовність
+                        </h3>
+                        <p class="challenge-description">
+                            Реалізація динамічного перемикання між українською та англійською мовами з збереженням стану інтерфейсу та плавними переходами.
+                        </p>
+                    </div>
+                    <div class="challenge-card fade-in">
+                        <h3 class="challenge-title">
+                            <span class="challenge-icon">🎭</span>
+                            Складні анімації
+                        </h3>
+                        <p class="challenge-description">
+                            Створення кастомних слайдерів, модальних вікон, hover-ефектів та інтерактивних елементів з плавними CSS та JS анімаціями.
+                        </p>
+                    </div>
+                    <div class="challenge-card fade-in">
+                        <h3 class="challenge-title">
+                            <span class="challenge-icon">📱</span>
+                            Pixel-perfect адаптив
+                        </h3>
+                        <p class="challenge-description">
+                            Ідеальна адаптивність для всіх пристроїв з 4 брейкпоінтами: мобайл (320px+), планшет (768px+), десктоп (1280px+), повний HD (1920px+).
+                        </p>
+                    </div>
+                    <div class="challenge-card fade-in">
+                        <h3 class="challenge-title">
+                            <span class="challenge-icon">🛒</span>
+                            E-commerce функції
+                        </h3>
+                        <p class="challenge-description">
+                            Багатокроковий процес покупки з валідацією форм, вибором країн/міст, розрахунком вартості та обробкою платіжної інформації.
+                        </p>
+                    </div>
+                    <div class="challenge-card fade-in">
+                        <h3 class="challenge-title">
+                            <span class="challenge-icon">🎯</span>
+                            SPA навігація
+                        </h3>
+                        <p class="challenge-description">
+                            Реалізація Single Page Application з hash-роутингом, плавною прокруткою та динамічним управлінням станом без фреймворків.
+                        </p>
+                    </div>
+                    <div class="challenge-card fade-in">
+                        <h3 class="challenge-title">
+                            <span class="challenge-icon">♿</span>
+                            Доступність
+                        </h3>
+                        <p class="challenge-description">
+                            Імплементація ARIA атрибутів, keyboard navigation, семантичної розмітки та focus management для користувачів з обмеженими можливостями.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Development Timeline -->
+            <section class="section fade-in">
+                <h2 class="section-title">Етапи розробки</h2>
+                <p class="section-text">
+                    Детальний розбір процесу створення проекту від аналізу дизайну до фінального деплою.
+                </p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Аналіз та планування</h3>
+                            <div class="timeline-duration">4-6 годин</div>
+                            <p class="timeline-description">
+                                Детальне вивчення Figma дизайну, планування архітектури проекту, вибір технологій та створення структури файлів.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">HTML розмітка</h3>
+                            <div class="timeline-duration">8-12 годин</div>
+                            <p class="timeline-description">
+                                Створення семантичної HTML структури з використанням сучасних тегів, мікророзмітки та підготовка для мультимовності.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">SCSS стилізація</h3>
+                            <div class="timeline-duration">25-35 годин</div>
+                            <p class="timeline-description">
+                                Написання модульних стилів за BEM методологією, створення адаптивної сітки, анімацій та hover-ефектів.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">JavaScript функціональність</h3>
+                            <div class="timeline-duration">15-25 годин</div>
+                            <p class="timeline-description">
+                                Імплементація інтерактивності: слайдери, модальні вікна, форми, мультимовність та SPA навігація.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Тестування та адаптивність</h3>
+                            <div class="timeline-duration">12-18 годин</div>
+                            <p class="timeline-description">
+                                Тестування на різних пристроях, налаштування брейкпоінтів, виправлення багів та оптимізація продуктивності.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Полірування та деплой</h3>
+                            <div class="timeline-duration">6-10 годин</div>
+                            <p class="timeline-description">
+                                Фінальна оптимізація коду, SEO налаштування, accessibility покращення та деплой на GitHub Pages.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Key Features -->
+            <section class="section fade-in">
+                <h2 class="section-title">Ключові особливості</h2>
+
+                <div class="code-example fade-in">
+                    <div class="code-header">
+                        <span>💡</span> Мультимовність - динамічне перемикання контенту
+                        <button class="copy-button">📋 Копіювати</button>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>function setLanguage(currentLanguage) {
+  const notCurrentTagNames = document.querySelectorAll('[data-lang]');
+  
+  notCurrentTagNames.forEach(function(tag) {
+    if (!tag.classList.contains('unselect-language')) {
+      tag.classList.add('unselect-language');
+    }
+  });
+
+  const currentTagNames = document.querySelectorAll(`[data-lang="${currentLanguage}"]`);
+  
+  currentTagNames.forEach(function(tag) {
+    if (tag.classList.contains('unselect-language')) {
+      tag.classList.remove('unselected-language');
+    }
+  });
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="code-example fade-in">
+                    <div class="code-header">
+                        <span>🎨</span> Адаптивні міксини SCSS
+                        <button class="copy-button">📋 Копіювати</button>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>@mixin on-tablet {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin on-desktop {
+  @media (min-width: 1280px) {
+    @content;
+  }
+}
+
+.header__title {
+  font-size: 26px;
+  
+  @include on-tablet {
+    font-size: 36px;
+  }
+  
+  @include on-desktop {
+    font-size: 46px;
+  }
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results -->
+            <section class="section fade-in">
+                <h2 class="section-title">Результати</h2>
+                <p class="section-text">
+                    Проект успішно демонструє професійний рівень frontend розробки та готовність до комерційних проектів.
+                </p>
+
+                <div class="results-grid">
+                    <div class="result-card fade-in">
+                        <div class="result-icon">🎯</div>
+                        <h3 class="result-title">Pixel-Perfect дизайн</h3>
+                        <p class="result-description">
+                            100% відповідність макету Figma з точністю до пікселя на всіх пристроях та роздільних здатностях.
+                        </p>
+                    </div>
+                    <div class="result-card fade-in">
+                        <div class="result-icon">⚡</div>
+                        <h3 class="result-title">Висока продуктивність</h3>
+                        <p class="result-description">
+                            Оптимізовані анімації, мінімізований код, швидкі завантаження та плавна взаємодія з інтерфейсом.
+                        </p>
+                    </div>
+                    <div class="result-card fade-in">
+                        <div class="result-icon">📱</div>
+                        <h3 class="result-title">Бездоганна адаптивність</h3>
+                        <p class="result-description">
+                            Ідеальна робота на всіх пристроях від мобільних телефонів до великих моніторів 4K.
+                        </p>
+                    </div>
+                    <div class="result-card fade-in">
+                        <div class="result-icon">♿</div>
+                        <h3 class="result-title">Доступність</h3>
+                        <p class="result-description">
+                            Повна підтримка скрін-рідерів, клавіатурної навігації та стандартів WCAG для інклюзивності.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conclusion -->
+            <section class="section fade-in">
+                <h2 class="section-title">Висновки</h2>
+                <p class="section-text">
+                    Проект KateVR став важливим етапом у моєму професійному розвитку як frontend розробника. Він демонструє не лише технічні навички, але й здатність працювати з складними завданнями та доводити проекти до професійного рівня.
+                </p>
+                
+                <div class="results-grid">
+                    <div class="result-card fade-in">
+                        <div class="result-icon">📚</div>
+                        <h3 class="result-title">Отримані навички</h3>
+                        <p class="result-description">
+                            Поглиблено знання SCSS, освоєно складні CSS Grid/Flexbox лейаути, вивчено принципи SPA розробки без фреймворків.
+                        </p>
+                    </div>
+                    <div class="result-card fade-in">
+                        <div class="result-icon">🚀</div>
+                        <h3 class="result-title">Готовність до роботи</h3>
+                        <p class="result-description">
+                            Проект підтверджує готовність до виконання комерційних завдань рівня middle frontend developer.
+                        </p>
+                    </div>
+                    <div class="result-card fade-in">
+                        <div class="result-icon">🎨</div>
+                        <h3 class="result-title">Портфоліо</h3>
+                        <p class="result-description">
+                            Яскравий приклад роботи для демонстрації потенційним роботодавцям та клієнтам.
+                        </p>
+                    </div>
+                    <div class="result-card fade-in">
+                        <div class="result-icon">🔄</div>
+                        <h3 class="result-title">Досвід рефакторингу</h3>
+                        <p class="result-description">
+                            Практика оптимізації коду, покращення архітектури та налагодження багатокомпонентних систем.
+                        </p>
+                    </div>
+                </div>
+
+                <p class="section-text">
+                    Цей проект показав, що з правильним підходом, наполегливістю та використанням сучасних інструментів можна створювати продукти професійного рівня навіть на початковому етапі кар'єри.
+                </p>
+                
+                <div class="project-links" style="justify-content: flex-start; margin-top: 40px;">
+                    <a href="index.html" class="link-button">
+                        ← Назад до портфоліо
+                    </a>
+                    <a href="https://dyadyabober.github.io/layout_KateVR/" target="_blank" class="link-button">
+                        🌐 Переглянути проект
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        /**
+         * KateVR Case Study Enhanced JavaScript
+         */
+        
+        class KateVRCaseStudy {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.setupProgressBar();
+                this.setupParticleSystem();
+                this.setupScrollAnimations();
+                this.setupTypewriterEffect();
+                this.setupStatsCounters();
+                this.setupTimelineAnimations();
+                this.setupCodeCopyButtons();
+                this.setupSmoothScrolling();
+                this.setupParallaxEffects();
+                
+                console.log('KateVR Case Study loaded successfully! 🚀');
+            }
+
+            // Progress bar at top of page
+            setupProgressBar() {
+                const progressBar = document.querySelector('.progress-bar');
+                
+                const updateProgress = () => {
+                    const scrollTop = window.pageYOffset;
+                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrollPercent = (scrollTop / docHeight) * 100;
+                    progressBar.style.width = Math.min(scrollPercent, 100) + '%';
+                };
+
+                window.addEventListener('scroll', updateProgress);
+                updateProgress();
+            }
+
+            // Floating particles system
+            setupParticleSystem() {
+                const header = document.querySelector('.case-header');
+                if (!header) return;
+
+                const createParticle = () => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 6 + 's';
+                    
+                    header.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.remove();
+                        }
+                    }, 6000);
+                };
+
+                // Create particles periodically
+                setInterval(createParticle, 300);
+            }
+
+            // Scroll-triggered animations
+            setupScrollAnimations() {
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -100px 0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => {
+                                entry.target.style.opacity = '1';
+                                entry.target.style.transform = 'translateY(0)';
+                                entry.target.classList.add('visible');
+                            }, index * 100);
+                        }
+                    });
+                }, observerOptions);
+
+                // Observe all animated elements
+                const animatedElements = document.querySelectorAll('.fade-in');
+                animatedElements.forEach(el => {
+                    observer.observe(el);
+                });
+            }
+
+            // Typewriter effect for project title
+            setupTypewriterEffect() {
+                const title = document.querySelector('.project-title');
+                if (!title) return;
+
+                const text = title.textContent;
+                title.textContent = '';
+                title.style.borderRight = '3px solid #60a5fa';
+                
+                let i = 0;
+                const typeWriter = () => {
+                    if (i < text.length) {
+                        title.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 120);
+                    } else {
+                        // Remove cursor after typing
+                        setTimeout(() => {
+                            title.style.borderRight = 'none';
+                        }, 1000);
+                    }
+                };
+                
+                setTimeout(typeWriter, 800);
+            }
+
+            // Animated counters for statistics
+            setupStatsCounters() {
+                const statsNumbers = document.querySelectorAll('.stat-number');
+                
+                const statsObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            this.animateCounter(entry.target);
+                            statsObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                statsNumbers.forEach(stat => {
+                    statsObserver.observe(stat);
+                });
+            }
+
+            animateCounter(element) {
+                const text = element.textContent;
+                const numbers = text.match(/\d+/g);
+                
+                if (!numbers || numbers.length === 0) return;
+
+                const finalNumber = parseInt(numbers[0]);
+                const duration = 2000;
+                const steps = 60;
+                const stepValue = finalNumber / steps;
+                const stepDuration = duration / steps;
+                
+                let current = 0;
+                element.textContent = text.replace(numbers[0], '0');
+                
+                const timer = setInterval(() => {
+                    current += stepValue;
+                    if (current >= finalNumber) {
+                        element.textContent = text;
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = text.replace(numbers[0], Math.floor(current).toString());
+                    }
+                }, stepDuration);
+            }
+
+            // Timeline entrance animations
+            setupTimelineAnimations() {
+                const timelineItems = document.querySelectorAll('.timeline-item');
+                
+                const timelineObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => {
+                                entry.target.style.opacity = '1';
+                                entry.target.style.transform = 'translateX(0)';
+                            }, index * 300);
+                        }
+                    });
+                }, { threshold: 0.2 });
+
+                timelineItems.forEach((item, index) => {
+                    item.style.opacity = '0';
+                    item.style.transform = index % 2 === 0 ? 'translateX(-80px)' : 'translateX(80px)';
+                    item.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    timelineObserver.observe(item);
+                });
+            }
+
+            // Copy code functionality
+            setupCodeCopyButtons() {
+                const copyButtons = document.querySelectorAll('.copy-button');
+                
+                copyButtons.forEach(button => {
+                    button.addEventListener('click', async () => {
+                        const codeBlock = button.closest('.code-example').querySelector('pre');
+                        try {
+                            await navigator.clipboard.writeText(codeBlock.textContent);
+                            
+                            button.textContent = '✅ Скопійовано';
+                            button.classList.add('copied');
+                            
+                            setTimeout(() => {
+                                button.textContent = '📋 Копіювати';
+                                button.classList.remove('copied');
+                            }, 2000);
+                        } catch (err) {
+                            console.error('Failed to copy code:', err);
+                            button.textContent = '❌ Помилка';
+                            setTimeout(() => {
+                                button.textContent = '📋 Копіювати';
+                            }, 2000);
+                        }
+                    });
+                });
+            }
+
+            // Smooth scrolling for anchor links
+            setupSmoothScrolling() {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    });
+                });
+            }
+
+            // Parallax effects
+            setupParallaxEffects() {
+                let ticking = false;
+
+                const updateParallax = () => {
+                    const scrolled = window.pageYOffset;
+                    const header = document.querySelector('.case-header');
+                    
+                    if (header) {
+                        const rate = scrolled * -0.2;
+                        header.style.transform = `translateY(${rate}px)`;
+                    }
+
+                    ticking = false;
+                };
+
+                const requestParallaxUpdate = () => {
+                    if (!ticking) {
+                        requestAnimationFrame(updateParallax);
+                        ticking = true;
+                    }
+                };
+
+                window.addEventListener('scroll', requestParallaxUpdate);
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            new KateVRCaseStudy();
+        });
+    </script>
+</body>
+</html>
+</style>
