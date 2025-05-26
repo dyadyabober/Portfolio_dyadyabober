@@ -61,8 +61,8 @@ lev-portfolio/
 
 1. **Клонуйте репозиторій**
    ```bash
-   git clone https://github.com/username/lev-portfolio.git
-   cd lev-portfolio
+   git clone https://github.com/username/Portfolio_dyadyabober.git
+   cd Portfolio_dyadyabober
    ```
 
 2. **Запустіть локальний сервер**
@@ -101,7 +101,7 @@ lev-portfolio/
 
 3. **Ваш сайт буде доступний за адресою:**
    ```
-   https://username.github.io/lev-portfolio
+   https://username.github.io/Portfolio_dyadyabober
    ```
 
 ### Netlify / Vercel (Безкоштовно)
