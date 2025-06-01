@@ -1,0 +1,95 @@
+/* ==========================================================================
+   FALLBACK STYLES FOR GITHUB PAGES
+   Add this CSS to ensure proper language display without JavaScript
+   ========================================================================== */
+
+/* Hide English content by default (fallback) */
+[data-lang="en"] {
+    display: none !important;
+}
+
+/* Show Ukrainian content by default (fallback) */
+[data-lang="uk"] {
+    display: block !important;
+}
+
+/* Inline elements specific rules */
+span[data-lang="en"] {
+    display: none !important;
+}
+
+span[data-lang="uk"] {
+    display: inline !important;
+}
+
+/* Block elements specific rules */
+div[data-lang="en"], 
+p[data-lang="en"], 
+h1[data-lang="en"], 
+h2[data-lang="en"], 
+h3[data-lang="en"],
+h4[data-lang="en"],
+h5[data-lang="en"],
+h6[data-lang="en"] {
+    display: none !important;
+}
+
+div[data-lang="uk"], 
+p[data-lang="uk"], 
+h1[data-lang="uk"], 
+h2[data-lang="uk"], 
+h3[data-lang="uk"],
+h4[data-lang="uk"],
+h5[data-lang="uk"],
+h6[data-lang="uk"] {
+    display: block !important;
+}
+
+/* Table elements */
+td[data-lang="en"],
+th[data-lang="en"],
+tr[data-lang="en"] {
+    display: none !important;
+}
+
+/* List elements */
+li[data-lang="en"] {
+    display: none !important;
+}
+
+li[data-lang="uk"] {
+    display: list-item !important;
+}
+
+/* Language selector should be hidden if JS doesn't work */
+.language-selector {
+    display: none;
+}
+
+/* Show language selector only when JS loads */
+.js-enabled .language-selector {
+    display: block;
+}
+
+/* Ensure language option menu items are always visible */
+.language-option {
+    display: flex !important;
+}
+
+/* When JS is disabled, add a note about language */
+.no-js-message {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: rgba(96, 165, 250, 0.1);
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #60a5fa;
+    z-index: 1000;
+}
+
+.js-enabled .no-js-message {
+    display: none;
+}

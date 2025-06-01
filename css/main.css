@@ -151,6 +151,46 @@ body {
     display: none !important;
 }
 
+/* Default language visibility - ensure English is hidden by default */
+[data-lang="en"] {
+    display: none !important;
+}
+
+[data-lang="uk"] {
+    display: initial !important;
+}
+
+/* Override for inline elements */
+span[data-lang="en"] {
+    display: none !important;
+}
+
+span[data-lang="uk"] {
+    display: inline !important;
+}
+
+/* Override for block elements */
+div[data-lang="en"], 
+p[data-lang="en"], 
+h1[data-lang="en"], 
+h2[data-lang="en"], 
+h3[data-lang="en"] {
+    display: none !important;
+}
+
+div[data-lang="uk"], 
+p[data-lang="uk"], 
+h1[data-lang="uk"], 
+h2[data-lang="uk"], 
+h3[data-lang="uk"] {
+    display: block !important;
+}
+
+/* Keep language menu options always visible */
+.language-option {
+    display: flex !important;
+}
+
 /* Layout */
 .container {
     display: flex;
