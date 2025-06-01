@@ -4,6 +4,37 @@
 
 /* Tablet Styles */
 @media (max-width: 768px) {
+    .language-selector {
+        top: 20px;
+        right: 20px;
+    }
+    
+    .language-current {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+    
+    .language-current .flag {
+        font-size: 14px;
+    }
+    
+    .language-dropdown {
+        min-width: 140px;
+    }
+    
+    .language-option {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+    
+    .language-option .lang-code {
+        font-size: 11px;
+    }
+    
+    .language-option .lang-name {
+        font-size: 9px;
+    }
+    
     .sidebar {
         width: 60px;
         padding: 20px 15px;
@@ -66,6 +97,46 @@
 
 /* Mobile Styles */
 @media (max-width: 480px) {
+    .language-selector {
+        top: 15px;
+        right: 15px;
+    }
+    
+    .language-current {
+        padding: 8px 10px;
+        font-size: 11px;
+    }
+    
+    .language-current .flag {
+        font-size: 13px;
+    }
+    
+    .language-current .arrow {
+        font-size: 8px;
+    }
+    
+    .language-dropdown {
+        min-width: 120px;
+    }
+    
+    .language-option {
+        padding: 8px 10px;
+        font-size: 11px;
+        gap: 8px;
+    }
+    
+    .language-option .flag {
+        font-size: 14px;
+    }
+    
+    .language-option .lang-code {
+        font-size: 10px;
+    }
+    
+    .language-option .lang-name {
+        font-size: 8px;
+    }
+    
     .logo {
         font-size: 20px;
         margin-bottom: 30px;
@@ -150,6 +221,25 @@
 
 /* Large Desktop Styles */
 @media (min-width: 1400px) {
+    .language-selector {
+        top: 50px;
+        right: 50px;
+    }
+    
+    .language-current {
+        padding: 14px 18px;
+        font-size: 15px;
+    }
+    
+    .language-dropdown {
+        min-width: 180px;
+    }
+    
+    .language-option {
+        padding: 14px 18px;
+        font-size: 15px;
+    }
+    
     .section-content {
         max-width: 900px;
     }
@@ -173,6 +263,10 @@
 
 /* Print Styles */
 @media print {
+    .language-selector {
+        display: none;
+    }
+    
     body {
         background: white;
         color: black;
@@ -195,5 +289,14 @@
         min-height: auto;
         page-break-inside: avoid;
         padding: 40px 20px;
+    }
+    
+    /* Show only Ukrainian content in print */
+    [data-lang="en"] {
+        display: none !important;
+    }
+    
+    [data-lang="uk"] {
+        display: block !important;
     }
 }

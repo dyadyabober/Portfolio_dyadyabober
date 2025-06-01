@@ -1,5 +1,5 @@
 /**
- * Scroll to Top Button Functionality
+ * Scroll to Top Button Functionality with Multilingual Support
  */
 
 class ScrollToTop {
@@ -18,6 +18,7 @@ class ScrollToTop {
         
         this.bindEvents();
         this.toggleVisibility();
+        this.setupLanguageIntegration();
     }
     
     bindEvents() {
@@ -44,6 +45,30 @@ class ScrollToTop {
                 this.scrollToTop();
             }
         });
+    }
+    
+    setupLanguageIntegration() {
+        // Set initial tooltip
+        this.updateTooltip('uk');
+        
+        // Listen for language changes
+        document.addEventListener('languageChanged', (e) => {
+            this.updateTooltip(e.detail.language);
+        });
+    }
+    
+    updateTooltip(language) {
+        const tooltips = {
+            uk: 'Наверх',
+            en: 'To top'
+        };
+        
+        if (this.button) {
+            this.button.setAttribute('title', tooltips[language] || tooltips.uk);
+            
+            // Also update aria-label for accessibility
+            this.button.setAttribute('aria-label', tooltips[language] || tooltips.uk);
+        }
     }
     
     toggleVisibility() {
@@ -81,6 +106,11 @@ class ScrollToTop {
     setThreshold(pixels) {
         this.threshold = pixels;
         this.toggleVisibility();
+    }
+    
+    // Method to manually update language (for external integration)
+    setLanguage(language) {
+        this.updateTooltip(language);
     }
 }
 
@@ -167,19 +197,6 @@ class ScrollProgress {
     }
 }
 
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize scroll to top button
-    window.scrollToTop = new ScrollToTop();
-    
-    // Initialize smooth scroll polyfill
-    SmoothScrollPolyfill.init();
-    
-    // Optional: Initialize scroll progress bar
-    // Uncomment the line below if you want a progress bar at the top
-    // window.scrollProgress = new ScrollProgress();
-});
-
 // Performance optimization: Intersection Observer for animations
 class ScrollAnimations {
     constructor() {
@@ -207,7 +224,116 @@ class ScrollAnimations {
     }
 }
 
+// Language-aware scroll functionality helper
+class MultilingualScrollHelper {
+    constructor() {
+        this.currentLanguage = 'uk';
+        this.init();
+    }
+    
+    init() {
+        // Listen for language changes
+        document.addEventListener('languageChanged', (e) => {
+            this.currentLanguage = e.detail.language;
+            this.updateScrollElements();
+        });
+        
+        // Also listen for direct language switcher calls
+        this.observeLanguageSwitcher();
+    }
+    
+    observeLanguageSwitcher() {
+        // Integration with language switcher if available
+        const checkLanguageSwitcher = () => {
+            if (window.languageSwitcher) {
+                const originalSwitchLanguage = window.languageSwitcher.switchLanguage;
+                window.languageSwitcher.switchLanguage = (language) => {
+                    originalSwitchLanguage.call(window.languageSwitcher, language);
+                    
+                    // Update scroll elements
+                    this.currentLanguage = language;
+                    this.updateScrollElements();
+                    
+                    // Dispatch custom event
+                    document.dispatchEvent(new CustomEvent('languageChanged', {
+                        detail: { language: language }
+                    }));
+                };
+            } else {
+                // Retry after 100ms if language switcher not yet available
+                setTimeout(checkLanguageSwitcher, 100);
+            }
+        };
+        
+        checkLanguageSwitcher();
+    }
+    
+    updateScrollElements() {
+        // Update scroll to top button tooltip
+        if (window.scrollToTop) {
+            window.scrollToTop.setLanguage(this.currentLanguage);
+        }
+        
+        // Update any other scroll-related elements that need language updates
+        this.updateScrollToTopButtonContent();
+    }
+    
+    updateScrollToTopButtonContent() {
+        const scrollButton = document.getElementById('scrollToTop');
+        if (scrollButton) {
+            // Update title attribute
+            const tooltips = {
+                uk: 'Наверх',
+                en: 'To top'
+            };
+            
+            scrollButton.setAttribute('title', tooltips[this.currentLanguage]);
+            scrollButton.setAttribute('aria-label', tooltips[this.currentLanguage]);
+        }
+    }
+    
+    // Get current language
+    getCurrentLanguage() {
+        return this.currentLanguage;
+    }
+    
+    // Set language manually
+    setLanguage(language) {
+        if (language === 'uk' || language === 'en') {
+            this.currentLanguage = language;
+            this.updateScrollElements();
+        }
+    }
+}
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize scroll to top button
+    window.scrollToTop = new ScrollToTop();
+    
+    // Initialize smooth scroll polyfill
+    SmoothScrollPolyfill.init();
+    
+    // Initialize multilingual scroll helper
+    window.multilingualScrollHelper = new MultilingualScrollHelper();
+    
+    // Optional: Initialize scroll progress bar
+    // Uncomment the line below if you want a progress bar at the top
+    // window.scrollProgress = new ScrollProgress();
+    
+    // Optional: Initialize scroll animations
+    // window.scrollAnimations = new ScrollAnimations();
+    
+    console.log('Scroll functionality with multilingual support initialized! ⬆️🌍');
+});
+
 // Export for use in other modules
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { ScrollToTop, SmoothScrollPolyfill, ScrollProgress, ScrollAnimations };
+    module.exports = { 
+        ScrollToTop, 
+        SmoothScrollPolyfill, 
+        ScrollProgress, 
+        ScrollAnimations,
+        MultilingualScrollHelper
+    };
 }

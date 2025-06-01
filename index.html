@@ -20,15 +20,40 @@
 </head>
 <body>
     <div class="container">
+        <!-- Language Selector -->
+        <div class="language-selector">
+            <div class="language-current">
+                <span class="flag">🇺🇦</span>
+                <span class="lang-code">UA</span>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="language-dropdown">
+                <div class="language-option active" data-lang="uk">
+                    <span class="flag">🇺🇦</span>
+                    <div class="lang-info">
+                        <span class="lang-code">UA</span>
+                        <span class="lang-name">Українська</span>
+                    </div>
+                </div>
+                <div class="language-option" data-lang="en">
+                    <span class="flag">🇺🇸</span>
+                    <div class="lang-info">
+                        <span class="lang-code">EN</span>
+                        <span class="lang-name">English</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <nav class="sidebar">
-            <div class="logo">Л</div>
+            <div class="logo" id="logoElement">Л</div>
             <ul class="nav">
-                <li><a href="#intro" class="active">Intro</a></li>
-                <li><a href="#work">Work</a></li>
-                <li><a href="#values">Values</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#background">Background</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#intro" class="active" data-lang="uk">Intro</a><a href="#intro" class="active lang-hidden" data-lang="en">Intro</a></li>
+                <li><a href="#work" data-lang="uk">Work</a><a href="#work" class="lang-hidden" data-lang="en">Work</a></li>
+                <li><a href="#values" data-lang="uk">Values</a><a href="#values" class="lang-hidden" data-lang="en">Values</a></li>
+                <li><a href="#skills" data-lang="uk">Skills</a><a href="#skills" class="lang-hidden" data-lang="en">Skills</a></li>
+                <li><a href="#background" data-lang="uk">Background</a><a href="#background" class="lang-hidden" data-lang="en">Background</a></li>
+                <li><a href="#contact" data-lang="uk">Contact</a><a href="#contact" class="lang-hidden" data-lang="en">Contact</a></li>
             </ul>
         </nav>
 
@@ -36,38 +61,58 @@
             <!-- Intro Section -->
             <section id="intro" class="section">
                 <div class="section-content">
-                    <h1 class="section-title">Привіт, я <span class="highlight">frontend розробник</span> який створює красиві речі, що допомагають людям.</h1>
+                    <h1 class="section-title">
+                        <span data-lang="uk">Привіт, я <span class="highlight">frontend розробник</span> який створює красиві речі, що допомагають людям.</span>
+                        <span data-lang="en" class="lang-hidden">Hi, I'm a <span class="highlight">frontend developer</span> who creates beautiful things that help people.</span>
+                    </h1>
                 </div>
             </section>
 
             <!-- Work Section -->
             <section id="work" class="section">
                 <div class="section-content">
-                    <h2 class="section-title">Я frontend розробник з <span class="highlight">1 роком практичного досвіду</span> у веб-розробці та продуктах. Я активно шукаю нову роль.</h2>
-                    <p class="section-subtitle">Спеціалізуюся на React, адаптивній верстці та створенні інтерактивних користувацьких інтерфейсів.</p>
+                    <h2 class="section-title">
+                        <span data-lang="uk">Я frontend розробник з <span class="highlight">1 роком практичного досвіду</span> у веб-розробці та продуктах. Я активно шукаю нову роль.</span>
+                        <span data-lang="en" class="lang-hidden">I'm a frontend developer with <span class="highlight">1 year of practical experience</span> in web development and products. I'm actively looking for a new role.</span>
+                    </h2>
+                    <p class="section-subtitle">
+                        <span data-lang="uk">Спеціалізуюся на React, адаптивній верстці та створенні інтерактивних користувацьких інтерфейсів.</span>
+                        <span data-lang="en" class="lang-hidden">I specialize in React, responsive design, and creating interactive user interfaces.</span>
+                    </p>
                 </div>
             </section>
 
             <!-- Values Section -->
             <section id="values" class="section">
                 <div class="section-content">
-                    <h2 class="section-title">Я пишаюся своїм ремеслом і люблю ділитися знаннями з початківцями.</h2>
+                    <h2 class="section-title">
+                        <span data-lang="uk">Я пишаюся своїм ремеслом і люблю ділитися знаннями з початківцями.</span>
+                        <span data-lang="en" class="lang-hidden">I take pride in my craft and love sharing knowledge with beginners.</span>
+                    </h2>
                     <div class="values-grid">
                         <div class="value-card">
-                            <h3>Корисний</h3>
-                            <p>Створюю рішення, які дійсно допомагають користувачам вирішувати їхні завдання</p>
+                            <h3 data-lang="uk">Корисний</h3>
+                            <h3 data-lang="en" class="lang-hidden">Useful</h3>
+                            <p data-lang="uk">Створюю рішення, які дійсно допомагають користувачам вирішувати їхні завдання</p>
+                            <p data-lang="en" class="lang-hidden">I create solutions that really help users solve their tasks</p>
                         </div>
                         <div class="value-card">
-                            <h3>Продуманий</h3>
-                            <p>Кожне рішення ретельно обмірковане з урахуванням потреб користувача</p>
+                            <h3 data-lang="uk">Продуманий</h3>
+                            <h3 data-lang="en" class="lang-hidden">Thoughtful</h3>
+                            <p data-lang="uk">Кожне рішення ретельно обмірковане з урахуванням потреб користувача</p>
+                            <p data-lang="en" class="lang-hidden">Every solution is carefully thought out considering user needs</p>
                         </div>
                         <div class="value-card">
-                            <h3>Красивий</h3>
-                            <p>Поєднання функціональності з естетикою для приємного досвіду</p>
+                            <h3 data-lang="uk">Красивий</h3>
+                            <h3 data-lang="en" class="lang-hidden">Beautiful</h3>
+                            <p data-lang="uk">Поєднання функціональності з естетикою для приємного досвіду</p>
+                            <p data-lang="en" class="lang-hidden">Combining functionality with aesthetics for a pleasant experience</p>
                         </div>
                         <div class="value-card">
-                            <h3>Якісний</h3>
-                            <p>Високі стандарти коду та уваги до деталей у кожному проекті</p>
+                            <h3 data-lang="uk">Якісний</h3>
+                            <h3 data-lang="en" class="lang-hidden">Quality</h3>
+                            <p data-lang="uk">Високі стандарти коду та уваги до деталей у кожному проекті</p>
+                            <p data-lang="en" class="lang-hidden">High code standards and attention to detail in every project</p>
                         </div>
                     </div>
                 </div>
@@ -76,10 +121,14 @@
             <!-- Skills Section -->
             <section id="skills" class="section">
                 <div class="section-content">
-                    <h2 class="section-title">Я системний мислитель з високою планкою якості.</h2>
+                    <h2 class="section-title">
+                        <span data-lang="uk">Я системний мислитель з високою планкою якості.</span>
+                        <span data-lang="en" class="lang-hidden">I'm a systems thinker with high quality standards.</span>
+                    </h2>
                     <div class="skills-grid">
                         <div class="skill-group">
-                            <h3>Технології</h3>
+                            <h3 data-lang="uk">Технології</h3>
+                            <h3 data-lang="en" class="lang-hidden">Technologies</h3>
                             <ul class="skill-list">
                                 <li>HTML5, CSS3, Sass</li>
                                 <li>JavaScript (ES6+)</li>
@@ -88,12 +137,13 @@
                             </ul>
                         </div>
                         <div class="skill-group">
-                            <h3>Інструменти</h3>
+                            <h3 data-lang="uk">Інструменти</h3>
+                            <h3 data-lang="en" class="lang-hidden">Tools</h3>
                             <ul class="skill-list">
-                                <li>VS Code + розширення</li>
+                                <li>VS Code + <span data-lang="uk">розширення</span><span data-lang="en" class="lang-hidden">extensions</span></li>
                                 <li>Git & GitHub</li>
                                 <li>ESLint, Prettier</li>
-                                <li>Вивчаю TypeScript</li>
+                                <li><span data-lang="uk">Вивчаю TypeScript</span><span data-lang="en" class="lang-hidden">Learning TypeScript</span></li>
                             </ul>
                         </div>
                     </div>
@@ -103,43 +153,70 @@
             <!-- Background Section -->
             <section id="background" class="section">
                 <div class="section-content">
-                    <h2 class="section-title">Я приношу комплексний frontend досвід, від концепції до реалізації.</h2>
+                    <h2 class="section-title">
+                        <span data-lang="uk">Я приношу комплексний frontend досвід, від концепції до реалізації.</span>
+                        <span data-lang="en" class="lang-hidden">I bring comprehensive frontend experience, from concept to implementation.</span>
+                    </h2>
                     <div class="job">
-                        <h3 class="job-title">Frontend Development Student</h3>
+                        <h3 class="job-title">
+                            <span data-lang="uk">Frontend Development Student</span>
+                            <span data-lang="en" class="lang-hidden">Frontend Development Student</span>
+                        </h3>
                         <p class="company">Mate Academy</p>
-                        <p class="job-desc">Інтенсивне навчання сучасним frontend технологіям та практичним проектам.</p>
+                        <p class="job-desc">
+                            <span data-lang="uk">Інтенсивне навчання сучасним frontend технологіям та практичним проектам.</span>
+                            <span data-lang="en" class="lang-hidden">Intensive training in modern frontend technologies and practical projects.</span>
+                        </p>
                     </div>
-                  <div class="job">
-                      <h3 class="job-title">KateVR Project</h3>
-                      <p class="company">Academy Project</p>
-                      <p class="job-desc">Створення адаптивного SPA-сайту з власними анімаціями та інтерактивністю. Проект класифікується як HARD рівень складності.</p>
-                      <a href="katevr-case.html" class="project-link">Детальніше про проект</a>
-                  </div>
+                    <div class="job">
+                        <h3 class="job-title">
+                            <span data-lang="uk">KateVR Project</span>
+                            <span data-lang="en" class="lang-hidden">KateVR Project</span>
+                        </h3>
+                        <p class="company">Academy Project</p>
+                        <p class="job-desc">
+                            <span data-lang="uk">Створення адаптивного SPA-сайту з власними анімаціями та інтерактивністю. Проект класифікується як HARD рівень складності.</span>
+                            <span data-lang="en" class="lang-hidden">Creating a responsive SPA website with custom animations and interactivity. The project is classified as HARD difficulty level.</span>
+                        </p>
+                        <a href="katevr-case.html" class="project-link">
+                            <span data-lang="uk">Детальніше про проект</span>
+                            <span data-lang="en" class="lang-hidden">More about project</span>
+                        </a>
+                    </div>
                 </div>
             </section>
 
             <!-- Contact Section -->
             <section id="contact" class="section">
                 <div class="section-content">
-                    <h2 class="section-title">Я <span class="code-text">{технічно_грамотний}</span> і готовий створювати щось чудове разом з вами.</h2>
+                    <h2 class="section-title">
+                        <span data-lang="uk">Я <span class="code-text">{технічно_грамотний}</span> і готовий створювати щось чудове разом з вами.</span>
+                        <span data-lang="en" class="lang-hidden">I'm <span class="code-text">{technically_proficient}</span> and ready to create something amazing together with you.</span>
+                    </h2>
                     <div class="contact-info">
-                        <h3>Зв'язатися зі мною</h3>
+                        <h3 data-lang="uk">Зв'язатися зі мною</h3>
+                        <h3 data-lang="en" class="lang-hidden">Get in touch</h3>
                         <p><strong>Email:</strong> <a href="mailto:infinitystackdeveloper@gmail.com">infinitystackdeveloper@gmail.com</a></p>
-                        <p><strong>Локація:</strong> Київ, Україна</p>
-                        <div class="status-badge">🚀 Активно шукаю роботу</div>
+                        <p><strong data-lang="uk">Локація:</strong><strong data-lang="en" class="lang-hidden">Location:</strong> <span data-lang="uk">Київ, Україна</span><span data-lang="en" class="lang-hidden">Kyiv, Ukraine</span></p>
+                        <div class="status-badge">
+                            <span data-lang="uk">🚀 Активно шукаю роботу</span>
+                            <span data-lang="en" class="lang-hidden">🚀 Actively looking for work</span>
+                        </div>
                     </div>
                 </div>
             </section>
         </main>
 
         <!-- Scroll to Top Button -->
-        <button class="scroll-to-top" id="scrollToTop" title="Наверх">
-            ↑
+        <button class="scroll-to-top" id="scrollToTop">
+            <span data-lang="uk" title="Наверх">↑</span>
+            <span data-lang="en" class="lang-hidden" title="To top">↑</span>
         </button>
     </div>
 
     <!-- Scripts -->
     <script src="js/main.js"></script>
     <script src="js/scroll.js"></script>
+    <script src="js/language.js"></script>
 </body>
 </html>
